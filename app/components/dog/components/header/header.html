@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header
+      class="bg-[#F6FBF5D9] dark:bg-[#1A1C1AD9] h-16 m-auto sticky top-0 z-20 backdrop-blur-md content-center">
+      <div class="mx-6 items-center flex justify-between">
+        <div class="flex items-center gap-2">
+          <img src="components/images/logo.png" class="h-8 content-center" />
+          <div class="flex flex-col justify-center">
+            <h1 class="text-[#8D4B00] dark:text-[#FFB77D] text-2xl">
+              Dog Explorer
+            </h1>
+            <p class="md:hidden text-xs">Discover</p>
+          </div>
+        </div>
+
+        <div class="gap-5 hidden md:flex">
+          <a
+            href="#discover"
+            class="nav-link px-5 py-1.5 text-gray-600 dark:text-gray-300 hover:text-[#B15F00] data-active:font-semibold data-active:bg-[#B15F00] data-active:text-white rounded-full"
+            >Discover</a
+          >
+          <a
+            href="#breeds"
+            class="nav-link px-5 py-1.5 text-gray-600 dark:text-gray-300 hover:text-[#B15F00] data-active:font-semibold data-active:bg-[#B15F00] data-active:text-white rounded-full"
+            >Breeds</a
+          >
+          <a
+            href="#gallery"
+            class="nav-link px-5 py-1.5 text-gray-600 dark:text-gray-300 hover:text-[#B15F00] data-active:font-semibold data-active:bg-[#B15F00] data-active:text-white rounded-full"
+            >Gallery</a
+          >
+        </div>
+
+        <div class="flex gap-1">
+          <button
+            class="p-2 text-2xl w-11 h-11 md:hidden cursor-pointer"
+            id="search">
+            🔍
+          </button>
+          <button
+            id="themeToggle"
+            class="p-2 md:p-0.5 text-2xl w-11 h-11 md:w-9 md:h-9 rounded-full md:bg-[#EBEFEA] md:dark:bg-[#2A2D2A] cursor-pointer">
+            ☼
+          </button>
+        </div>
+      </div>
+      <div
+        class="hidden absolute top-16 left-0 right-0 bg-[#F6FBF5] dark:bg-[#1A1C1A] p-4 shadow-lg"
+        id="searchBox">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search breeds"
+          class="w-full bg-white dark:bg-[#252825] px-4 py-3 rounded-full outline-none" />
+        <div class="flex flex-wrap gap-2 mt-3" id="searchResults"></div>
+      </div>
+    </header>
+  </body>
+</html>

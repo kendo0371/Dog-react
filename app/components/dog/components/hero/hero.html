@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <hero id="discover" class="m-auto mt-8 scroll-mt-20">
+      <div class="flex flex-col md:flex-row md:justify-between md:m-auto">
+        <div class="flex flex-col gap-2 md:min-w-115 mx-6 md:mx-12">
+          <span
+            class="text-xs bg-[#FFDCC1] dark:bg-[#3A2A1E] dark:text-[#FFDCC1] px-3 py-1 rounded-full mr-auto">
+            🐾 DAILY JOY FEED
+          </span>
+          <div class="flex text-4xl gap-2">
+            <h1 class="text-black dark:text-white">
+              Meet a
+              <strong
+                class="text-[#8D4B00] dark:text-[#FFB77D] underline underline-offset-8">
+                New Friend
+              </strong>
+            </h1>
+          </div>
+
+          <span class="text-xl flex pr-10 max-w-116">
+            Discover dogs from around the world, one adorable face at a
+            time.<small class="hidden md:contents text-xl">
+              Pure championship, heart-melting grins, and gentle spirits
+            </small>
+          </span>
+
+          <div class="hidden md:flex pt-8 gap-4">
+            <a
+              class="flex gap-1 items-center text-center px-7 py-3 bg-[#8D4B00] text-white rounded-full cursor-pointer hover:shadow-xs shadow-black hover:text-xl transition: duration-200"
+              href=""
+              onclick="
+                event.preventDefault();
+                loadHeroImage();
+              ">
+              <div class="text-white text-3xl">⟳</div>
+              <div>Show Another</div>
+            </a>
+
+            <a
+              class="bg-[#E5E9E4] dark:bg-[#2A2D2A] text-center px-7 py-3 rounded-full cursor-pointer items-center flex hover:shadow-xs shadow-black hover:text-xl transition: duration-200"
+              href="#explore">
+              Explore Breeds
+            </a>
+          </div>
+
+          <div class="hidden md:block m-auto mt-10">
+            <div class="flex gap-3 mr-30 text-xl">
+              <div
+                class="flex flex-col py-3 w-57 bg-white dark:bg-[#1E211F] rounded-xl text-center">
+                <span>😃</span>
+                <span class="text-[#887364]">Friendliness</span>
+                <span>10 / 10</span>
+              </div>
+              <div
+                class="flex flex-col py-3 w-57 bg-white dark:bg-[#1E211F] rounded-xl text-center">
+                <span>⚡</span>
+                <span class="text-[#887364]">Energy Level</span>
+                <span>Vibrant</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="md:mx-25 flex flex-col bg-white dark:bg-[#1E211F] rounded-4xl mt-4 relative shadow-2xl shadow-[#8D4B00]/10">
+          <div
+            class="hidden md:block absolute -top-20 -right-20 w-50 h-30 rounded-full bg-[#FFB77D] opacity-60 blur-3xl -z-10 pointer-events-none"></div>
+          <div
+            class="hidden md:block absolute -bottom-20 -left-20 w-50 h-30 rounded-full bg-[#FFB77D] opacity-60 blur-3xl -z-10 pointer-events-none"></div>
+          <div class="relative">
+            <div id="heroImage"></div>
+            <div
+              class="absolute left-10 bottom-10 text-white [text-shadow:0_1px_6px_rgba(0,0,0,0.7)]">
+              <span class="block text-2xl md:text-3xl font-bold" id="heroName">
+                Sunny Cooper
+              </span>
+              <span class="text-sm md:text-base">
+                Gentle companion • Loves afternoon park fetch
+              </span>
+            </div>
+            <span
+              class="hidden md:block absolute right-10 bottom-10 bg-[#00000059] text-white text-xs px-3 py-1.5 rounded-full backdrop-blur-sm mb-10">
+              ✓ Gentle Giant
+            </span>
+          </div>
+          <div
+            class="flex absolute top-0 left-0 mt-10 ml-10 bg-[#F6FBF5E5] dark:bg-[#1A1C1AE5] py-2 px-4 rounded-full items-center gap-2">
+            <img
+              class="hidden md:block h-4"
+              src="/components/images/paws.png" />
+            <span class="md:hidden">🐾</span>
+            <span>Husky</span>
+          </div>
+          <div class="md:hidden">
+            <div class="flex justify-evenly mt-4">
+              <a
+                class="flex justify-between items-center gap-2 bg-[#8D4B00] text-white text-xl w-37.5 rounded-2xl px-4"
+                href=""
+                onclick="
+                  event.preventDefault();
+                  loadHeroImage();
+                ">
+                <div>⇄</div>
+                <div class="flex flex-col">
+                  <span>Show</span>
+                  <span>Another</span>
+                </div>
+              </a>
+              <a
+                class="flex items-center gap-2 p-2 bg-[#FFDCC1] text-[#2E1500] text-xl w-37.5 justify-center rounded-2xl px-4"
+                href="#explore">
+                <img class="h-4" src="/components/images/paws.png" />
+                <span>Breeds</span>
+              </a>
+            </div>
+            <div class="flex gap-2 justify-evenly my-4 text-center">
+              <div
+                class="flex flex-col bg-[#F0F5F0] dark:bg-[#252825] w-24.5 py-2.5 rounded-xl">
+                <span class="text-[#8D4B00]">10 / 10</span>
+                <span class="text-[#554336] dark:text-[#D8C2B0]"
+                  >Friendliness</span
+                >
+              </div>
+              <div
+                class="flex flex-col bg-[#F0F5F0] dark:bg-[#252825] w-24.5 py-2.5 rounded-xl">
+                <span class="text-[#8D4B00]">Vibrant</span>
+                <span class="text-[#554336] dark:text-[#D8C2B0]">Energy</span>
+              </div>
+              <div
+                class="flex flex-col bg-[#F0F5F0] dark:bg-[#252825] w-24.5 py-2.5 rounded-xl">
+                <span class="text-[#8D4B00]">Infinite</span>
+                <span class="text-[#554336] dark:text-[#D8C2B0]">Cuddles</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div></div>
+    </hero>
+
+    <script src="hero.js"></script>
+  </body>
+</html>

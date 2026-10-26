@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="mx-6 md:mx-12 my-12 md:my-20 flex flex-col md:items-center">
+      <span
+        class="text-xs bg-[#FFDCC1] dark:bg-[#3A2A1E] dark:text-[#FFDCC1] px-3 py-1 rounded-full mr-auto md:mx-auto">
+        ✨ COMMUNITY SNAPS
+      </span>
+      <span class="mt-2 font-bold text-3xl md:text-5xl">More Dogs to Love</span>
+      <p class="text-[#554336] dark:text-[#D8C2B0] mt-1 md:mt-2 md:text-xl">
+        A lively collection of everyday wagging tails, sweet snouts, and happy
+        smiles.
+      </p>
+
+      <!-- gallery.js энд зургуудыг нэмнэ -->
+      <div
+        id="galleryGrid"
+        class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-8 w-full"></div>
+
+      <button
+        class="flex items-center gap-2 mx-auto mt-10 bg-white dark:bg-[#252825] px-6 py-3 rounded-full cursor-pointer hover:shadow-xs shadow-black transition duration-200"
+        onclick="loadGalleryImages()">
+        <img class="h-4" src="/components/images/paws.png" />
+        <span>Show More Pups</span>
+      </button>
+    </div>
+  </body>
+</html>

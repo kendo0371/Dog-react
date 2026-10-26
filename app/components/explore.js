@@ -1,8 +1,72 @@
-import { BigStar } from "./icons/bigStar";
-import { Down } from "./icons/down";
+import { BigStar, Down } from "./icons/icons";
 import Image from "next/image";
+import Form from "next/form";
+import Link from "next/link";
+import { hrefWith, HiddenParams } from "./url";
 
-export function Explore() {
+const dogBreeds = [
+  { name: "Labradoodle", value: "labradoodle" },
+  { name: "Malamute", value: "malamute" },
+  { name: "Husky", value: "husky" },
+  { name: "Shiba Inu", value: "shiba" },
+  { name: "Samoyed", value: "samoyed" },
+];
+
+const defaultBreeds = ["labradoodle", "malamute", "husky"];
+
+function breedName(value) {
+  const breed = dogBreeds.find((b) => b.value === value);
+  return breed ? breed.name : value;
+}
+
+const profiles = [
+  {
+    name: "Barnaby",
+    old: "2 Years",
+    desc: "Loves open fields & warm nap spots",
+    characters: ["Affectionate", "Alert", "Smart"],
+  },
+  {
+    name: "Milo",
+    old: "1.5 Years",
+    desc: "Curious couch companion & snore champion",
+    characters: ["Quiet", "Loving", "Easygoing"],
+  },
+  {
+    name: "Archie",
+    old: "3 Years",
+    desc: "Radiant park sprinter & swimming enthusiast",
+    characters: ["Gentle", "Devoted", "Joyous"],
+  },
+];
+
+async function randomImage(breed) {
+  const res = await fetch(`https://dog.ceo/api/breed/${breed}/images/random`);
+  const result = await res.json();
+  return result.message;
+}
+
+async function loadCards(breed) {
+  if (breed === "all") {
+    const links = await Promise.all(defaultBreeds.map(randomImage));
+    return links.map((link, i) => ({
+      link,
+      title: breedName(defaultBreeds[i]),
+    }));
+  }
+
+  const res = await fetch(`https://dog.ceo/api/breed/${breed}/images/random/3`);
+  const result = await res.json();
+  if (result.status !== "success") return [];
+  return result.message.map((link) => ({ link, title: breedName(breed) }));
+}
+
+export async function Explore({ params }) {
+  // ?breed=husky гэвэл Husky, байхгүй бол "all"
+  const selectedBreed = params.breed ?? "all";
+  const cards = await loadCards(selectedBreed);
+  const shownDogs = cards.map((card, i) => ({ ...profiles[i], ...card }));
+
   return (
     <section
       className="bg-zinc-950 font-sans text-base text-stone-200 w-full px-4 lg:px-8 py-10"
@@ -26,17 +90,24 @@ export function Explore() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2 bg-zinc-900 p-1 rounded-full shadow-sm">
-            <Option />
+            {}
+            <Form
+              action="/"
+              scroll={false}
+              className="flex flex-wrap items-center gap-2">
+              <HiddenParams params={params} skip="breed" />
+              <Option value={selectedBreed} />
 
-            <button
-              className="px-6 py-1 rounded-full bg-amber-500 text-amber-950 font-semibold text-xs hover:brightness-105 transition-all"
-              type="button">
-              Show Dogs
-            </button>
+              <button
+                className="px-6 py-1 rounded-full bg-amber-500 text-amber-950 font-semibold text-xs hover:brightness-105 transition-all"
+                type="submit">
+                Show Dogs
+              </button>
+            </Form>
           </div>
         </div>
 
-        <BreedButtons />
+        <BreedButtons selectedBreed={selectedBreed} params={params} />
 
         <div className="w-full bg-zinc-900 p-6 rounded-3xl shadow-md flex flex-col md:flex-row items-center justify-between gap-4 relative overflow-hidden">
           <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-amber-300/10 rounded-full blur-2xl pointer-events-none" />
@@ -79,25 +150,33 @@ export function Explore() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
-          <Dogs />
+          <Dogs dogs={shownDogs} />
         </div>
       </div>
     </section>
   );
 }
 
-function Option() {
+function Option({ value }) {
   return (
     <div className="relative">
       <select
         aria-label="Select dog breed"
         className="appearance-none bg-zinc-800 text-stone-200 font-semibold text-xs rounded-full pl-4 pr-10 py-1 focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer"
-        id="breedSelect">
-        <option defaultValue="corgi">Pembroke Welsh Corgi</option>
-        <option value="golden">Golden Retriever</option>
-        <option value="frenchie">French Bulldog</option>
-        <option value="shiba">Shiba Inu</option>
-        <option value="samoyed">Samoyed</option>
+        id="breedSelect"
+        name="breed"
+        key={value}
+        defaultValue={value}>
+        <option value="all">ALL Breeds</option>
+        {dogBreeds.map((breed) => (
+          <option key={breed.value} value={breed.value}>
+            {breed.name}
+          </option>
+        ))}
+        {/* baihgui ym haiwal nemj haruulna */}
+        {value !== "all" && !dogBreeds.some((b) => b.value === value) && (
+          <option value={value}>{breedName(value)}</option>
+        )}
       </select>
 
       <Down />
@@ -105,101 +184,93 @@ function Option() {
   );
 }
 
-function BreedButtons() {
+const activeButton =
+  "px-4 py-1 rounded-full bg-amber-500 text-amber-950 font-semibold text-xs whitespace-nowrap shadow-sm";
+const inactiveButton =
+  "px-4 py-1 rounded-full bg-zinc-900 text-stone-300 hover:text-stone-200 hover:bg-zinc-800 font-semibold text-xs whitespace-nowrap transition-colors";
+
+function BreedButtons({ selectedBreed, params }) {
   return (
     <div className="flex items-center gap-2 overflow-x-auto pb-1">
-      <button
-        className="px-4 py-1 rounded-full bg-amber-500 text-amber-950 font-semibold text-xs whitespace-nowrap shadow-sm"
-        type="button">
+      <Link
+        className={selectedBreed === "all" ? activeButton : inactiveButton}
+        href={hrefWith(params, { breed: "all" })}
+        scroll={false}>
         All Breeds
-      </button>
+      </Link>
 
-      <BreedButton title="Pembroke Welsh Corgi" />
-
-      <BreedButton title="Golden Retriever" />
-
-      <BreedButton title="French Bulldog" />
-
-      <BreedButton title="Shiba Inu" />
-
-      <BreedButton title="Samoyed" />
+      {dogBreeds.map((dogBreed) => (
+        <BreedButton
+          breed={dogBreed}
+          key={dogBreed.value}
+          active={selectedBreed === dogBreed.value}
+          href={hrefWith(params, { breed: dogBreed.value })}
+        />
+      ))}
     </div>
   );
 }
 
-function BreedButton({ title }) {
+function BreedButton({ breed, active, href }) {
   return (
-    <button
-      className="px-4 py-1 rounded-full bg-zinc-900 text-stone-300 hover:text-stone-200 hover:bg-zinc-800 font-semibold text-xs whitespace-nowrap transition-colors"
-      type="button">
-      {title}
-    </button>
+    <Link
+      className={active ? activeButton : inactiveButton}
+      href={href}
+      scroll={false}>
+      {breed.name}
+    </Link>
   );
 }
 
-function Dogs() {
+function Dogs({ dogs }) {
   return (
     <>
-      <Dog
-        link="https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&w=800&q=80"
-        title="Pembroke Welsh Corgi"
-        name="Barnaby"
-        old="2 Years"
-        desc="Loves open fields & warm nap spots"
-        characters={["Affectionate", "Alert", "Smart"]}
-      />
-
-      <Dog
-        link="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80"
-        title="French Bulldog"
-        name="Milo"
-        old="1.5 Years"
-        desc="Curious couch companion & snore champion"
-        characters={["Quiet", "Loving", "Easygoing"]}
-      />
-
-      <Dog
-        link="https://images.dog.ceo/breeds/retriever-golden/n02099601_100.jpg"
-        title="Golden Retriever"
-        name="Archie"
-        old="3 Years"
-        desc="Radiant park sprinter & swimming enthusiast"
-        characters={["Gentle", "Devoted", "Joyous"]}
-      />
+      {dogs.map((dog, i) => (
+        <Dog dog={dog} key={i} />
+      ))}
     </>
   );
 }
 
-function Dog({ link, title, name, old, desc, characters }) {
+function Dog({ dog }) {
   return (
     <div className="group flex flex-col bg-zinc-900 rounded-3xl p-4 shadow-md hover:-translate-y-1 transition-all duration-300">
       <div className="relative w-full h-64 rounded-3xl overflow-hidden bg-zinc-700">
-        <Image
-          alt={title}
-          fill
-          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-          className="object-cover group-hover:scale-105 transition-transform duration-500"
-          src={link}
-        />
+        {/* zurag irtel saaral */}
+        {dog.link && (
+          <Image
+            alt={dog.title}
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
+            src={dog.link}
+          />
+        )}
 
-        <div className="absolute top-2 left-2 px-4 py-1 rounded-full bg-zinc-950/80 backdrop-blur-md text-stone-200 font-semibold text-xs">
-          {title}
+        <div className="absolute top-2 left-2 px-4 py-1 rounded-full bg-zinc-950/80 backdrop-blur-md text-stone-200 font-semibold text-xs capitalize">
+          {dog.title}
         </div>
       </div>
 
       <div className="flex flex-col gap-1 pt-4">
         <div className="flex items-center justify-between">
-          <h4 className="font-bold text-xl text-stone-200">{name}</h4>
+          <h4 className="font-bold text-xl text-stone-200 capitalize">
+            {dog.name ?? dog.title}
+          </h4>
 
-          <span className="text-amber-300 font-semibold text-xs">
-            {old} Old
-          </span>
+          {dog.old && (
+            <span className="text-amber-300 font-semibold text-xs">
+              {dog.old} Old
+            </span>
+          )}
         </div>
 
-        <p className="font-normal text-sm leading-5 text-stone-300">{desc}</p>
+        <p className="font-normal text-sm leading-5 text-stone-300">
+          {dog.desc}
+        </p>
 
         <div className="flex flex-wrap gap-1 pt-1">
-          {characters.map((character) => (
+          {dog.characters?.map((character) => (
             <Character key={character} title={character} />
           ))}
         </div>

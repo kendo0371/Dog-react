@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body id="explore">
+    <div
+      id="breeds"
+      class="bg-[#f0f5f8] dark:bg-[#181A18] rounded-t-4xl md:rounded-none mx-auto mt-4 md:mt-40 scroll-mt-20">
+      <div class="mx-6 md:mx-12 my-8 md:my-16 flex flex-col">
+        <div class="flex flex-col justify-between">
+          <div class="flex flex-col md:flex-row">
+            <div class="max-w-132">
+              <div class="flex gap-1.5 items-center text-center">
+                <span class="md:hidden dark:md:block">🐾</span>
+                <img
+                  class="h-3 hidden md:block dark:md:hidden"
+                  src="/components/images/Icon7.png" />
+                <span class="font-semibold text-[#8E4E00] dark:text-[#FFB77D]">
+                  BREED COMPENDIUM
+                </span>
+              </div>
+              <span class="mt-2 font-bold text-3xl md:text-5xl">
+                Find Your Favorite Breed
+              </span>
+              <p class="text-[#554336] dark:text-[#D8C2B0] mt-1 md:hidden">
+                Explore signature traits, temperaments, and personalities
+                tailored to your home.
+              </p>
+              <p
+                class="hidden md:block mt-2 text-xl text-[#554336] dark:text-[#D8C2B0] font-bold">
+                Choose from hundreds of friendly breeds and see happy pups ready
+                to brighten your day.
+              </p>
+            </div>
+            <div class="flex gap-3 w-full md:w-auto m-auto">
+              <div
+                class="flex gap-2 p-2 md:h-11 content-center my-auto bg-white dark:bg-[#252825] rounded-full w-full md:w-auto md:max-w-85">
+                <select
+                  name="hi"
+                  id="breedSelect"
+                  class="flex-1 md:flex-none bg-transparent dark:[color-scheme:dark]">
+                  <option value="all" id="allBreedsOption">
+                    ALL Breeds (Selected)
+                  </option>
+                  <option value="labradoodle">Labradoodle</option>
+                  <option value="malamute">Malamute</option>
+                  <option value="husky">Husky</option>
+                  <option value="shiba">Shiba Inu</option>
+                  <option value="samoyed">Samoyed</option>
+                </select>
+
+                <button
+                  class="px-4 py-3 bg-[#8D4B00] text-white rounded-full md:hidden"
+                  onclick="showSelectedBreed()">
+                  Filter
+                </button>
+              </div>
+              <button
+                class="hidden md:block bg-[#8E4E00] text-white rounded-full h-11 py-3 px-6 my-auto whitespace-nowrap shrink-0 cursor-pointer"
+                onclick="showSelectedBreed()">
+                Show Dogs
+              </button>
+            </div>
+          </div>
+
+          <div class="flex gap-2 mt-5">
+            <span class="hidden md:block font-extrabold">QUICK PICKS</span>
+            <div
+              class="flex gap-2 min-w-0 overflow-x-auto md:flex-wrap [scrollbar-width:none]">
+              <button
+                class="quick-pick shrink-0 whitespace-nowrap bg-white dark:bg-[#252825] data-active:bg-[#8D4B00] data-active:text-white px-4 py-2 rounded-full cursor-pointer hover:text-[18px] active:shadow-md shadow-black transition: duration-100"
+                data-breed="all"
+                data-active
+                onclick="showBreed('all')">
+                🐾All Breeds
+              </button>
+              <button
+                class="quick-pick shrink-0 whitespace-nowrap bg-white dark:bg-[#252825] data-active:bg-[#8D4B00] data-active:text-white px-4 py-2 rounded-full cursor-pointer hover:text-[18px] active:shadow-md shadow-black transition: duration-100"
+                data-breed="labradoodle"
+                onclick="showBreed('labradoodle')">
+                Labradoodle
+              </button>
+              <button
+                class="quick-pick shrink-0 whitespace-nowrap bg-white dark:bg-[#252825] data-active:bg-[#8D4B00] data-active:text-white px-4 py-2 rounded-full cursor-pointer hover:text-[18px] active:shadow-md shadow-black transition: duration-100"
+                data-breed="malamute"
+                onclick="showBreed('malamute')">
+                Malamute
+              </button>
+              <button
+                class="quick-pick shrink-0 whitespace-nowrap bg-white dark:bg-[#252825] data-active:bg-[#8D4B00] data-active:text-white px-4 py-2 rounded-full cursor-pointer hover:text-[18px] active:shadow-md shadow-black transition: duration-100"
+                data-breed="husky"
+                onclick="showBreed('husky')">
+                Husky
+              </button>
+              <button
+                class="quick-pick shrink-0 whitespace-nowrap bg-white dark:bg-[#252825] data-active:bg-[#8D4B00] data-active:text-white px-4 py-2 rounded-full cursor-pointer hover:text-[18px] active:shadow-md shadow-black transition: duration-100"
+                data-breed="shiba"
+                onclick="showBreed('shiba')">
+                Shiba inu
+              </button>
+              <button
+                class="quick-pick shrink-0 whitespace-nowrap bg-white dark:bg-[#252825] data-active:bg-[#8D4B00] data-active:text-white px-4 py-2 rounded-full cursor-pointer hover:text-[18px] active:shadow-md shadow-black transition: duration-100"
+                data-breed="samoyed"
+                onclick="showBreed('samoyed')">
+                Samoyed
+              </button>
+            </div>
+          </div>
+
+          <a
+            class="flex mx-6 bg-[#FFDCC199] dark:bg-[#2A2420] p-3.5 justify-between mt-10 rounded-2xl"
+            href="">
+            <div class="flex gap-3">
+              <div
+                class="w-10 h-10 md:w-12 md:h-12 items-center flex justify-center bg-[#FC9D3D] md:bg-[#2E15001A] rounded-full md:rounded-2xl">
+                <img class="md:hidden" src="components/images/medal.png" />
+                <img
+                  class="hidden md:block dark:hidden"
+                  src="components/images/medal2.png" />
+                <img
+                  class="hidden dark:md:block"
+                  src="components/images/medal3.png" />
+              </div>
+              <div class="flex flex-col">
+                <div class="flex gap-1.5">
+                  <span
+                    class="font-semibold text-xl text-[#2E1500] dark:text-[#FFDCC1]">
+                    Labradoodle
+                  </span>
+                  <span
+                    class="px-1.5 py-1 bg-[#8D4B00] md:bg-[#2E15001A] rounded-full text-xs text-white md:text-[#2E1500] content-center">
+                    TOP PICK
+                  </span>
+                </div>
+                <span
+                  class="text-[#6C3A00] dark:text-[#E0C3A8] text-xs md:hidden">
+                  Great with Kids & Herding
+                </span>
+                <span
+                  class="hidden md:block text-[#6C3A00] dark:text-[#E0C3A8]">
+                  Playful & Bold • Herding Group • Adaptable Companion
+                </span>
+              </div>
+            </div>
+
+            <span class="my-auto text-[#8D4B00] text-2xl md:hidden">→</span>
+
+            <div class="hidden md:flex items-center gap-2">
+              <img src="components/images/family.png" class="h-3" />
+              <span class="text-[#2E1500] dark:text-[#FFDCC1]"
+                >Great with Kids</span
+              >
+            </div>
+          </a>
+
+          <!-- w 342 378 -->
+          <!-- 342 347 -->
+
+          <!-- 256 347 -->
+
+          <!-- h 406 486 -->
+          <div
+            class="flex flex-col md:flex-row justify-between mx-6 gap-5 mt-8">
+            <div
+              class="relative bg-white dark:bg-[#1E211F] rounded-4xl overflow-hidden flex flex-col justify-between min-w-85.5 max-w-95 m-auto">
+              <div class="flex justify-center" id="exploreImage"></div>
+              <span
+                id="exploreLabel"
+                class="absolute top-3 left-3 md:top-7 md:left-7 bg-[#F6FBF5E5] dark:bg-[#1A1C1AE5] text-xs px-3 py-1 rounded-full">
+                Labradoodle
+              </span>
+              <div>
+                <div class="mx-4 mt-4 flex justify-between items-center">
+                  <span class="text-2xl text-[#181D1A] dark:text-white" id=""
+                    >Barnaby</span
+                  >
+                  <span class="text-[#8D4B00] dark:text-[#FFB77D]" id="reacts"
+                    >🙂 1.4k smiles</span
+                  >
+                </div>
+                <p
+                  class="hidden md:block mx-4 mt-1 text-[#554336] dark:text-[#D8C2B0]">
+                  Loves open fields & warm nap spots
+                </p>
+                <div class="flex gap-2 mx-4 mt-3 mb-4 text-xs">
+                  <span
+                    class="bg-[#EBEFEA] dark:bg-[#2A2D2A] px-2.5 py-1 rounded-full">
+                    Affectionate
+                  </span>
+                  <span
+                    class="bg-[#EBEFEA] dark:bg-[#2A2D2A] px-2.5 py-1 rounded-full">
+                    Alert
+                  </span>
+                  <span
+                    class="bg-[#EBEFEA] dark:bg-[#2A2D2A] px-2.5 py-1 rounded-full">
+                    Smart
+                  </span>
+                </div>
+                <div
+                  class="flex md:hidden justify-between items-center mx-4 mb-4 text-sm">
+                  <span class="text-[#554336] dark:text-[#D8C2B0]"
+                    >📍 Cotswolds, UK</span
+                  >
+                  <a
+                    class="bg-[#EBEFEA] dark:bg-[#2A2D2A] px-3 py-1.5 rounded-full text-xs"
+                    href="">
+                    View Profile ›
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="relative bg-white dark:bg-[#1E211F] rounded-4xl overflow-hidden flex flex-col justify-between min-w-85.5 max-w-95 m-auto">
+              <div class="flex justify-center" id="exploreImage2"></div>
+              <span
+                id="exploreLabel2"
+                class="absolute top-3 left-3 md:top-7 md:left-7 bg-[#F6FBF5E5] dark:bg-[#1A1C1AE5] text-xs px-3 py-1 rounded-full">
+                Malamute
+              </span>
+              <div>
+                <div class="mx-4 mt-4 flex justify-between items-center">
+                  <span class="text-2xl text-[#181D1A] dark:text-white" id=""
+                    >Milo</span
+                  >
+                  <span class="text-[#8D4B00] dark:text-[#FFB77D]" id="reacts"
+                    >🙂 2.1k smiles</span
+                  >
+                </div>
+                <p
+                  class="hidden md:block mx-4 mt-1 text-[#554336] dark:text-[#D8C2B0]">
+                  Curious couch companion & snore champion
+                </p>
+                <div class="flex gap-2 mx-4 mt-3 mb-4 text-xs">
+                  <span
+                    class="bg-[#EBEFEA] dark:bg-[#2A2D2A] px-2.5 py-1 rounded-full">
+                    Quiet
+                  </span>
+                  <span
+                    class="bg-[#EBEFEA] dark:bg-[#2A2D2A] px-2.5 py-1 rounded-full">
+                    Loving
+                  </span>
+                  <span
+                    class="bg-[#EBEFEA] dark:bg-[#2A2D2A] px-2.5 py-1 rounded-full">
+                    Easygoing
+                  </span>
+                </div>
+                <div
+                  class="flex md:hidden justify-between items-center mx-4 mb-4 text-sm">
+                  <span class="text-[#554336] dark:text-[#D8C2B0]"
+                    >📍 Lyon, France</span
+                  >
+                  <a
+                    class="bg-[#EBEFEA] dark:bg-[#2A2D2A] px-3 py-1.5 rounded-full text-xs"
+                    href="">
+                    View Profile ›
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="relative bg-white dark:bg-[#1E211F] rounded-4xl overflow-hidden flex flex-col justify-between min-w-85.5 max-w-95 m-auto">
+              <div class="flex justify-center" id="exploreImage3"></div>
+              <span
+                id="exploreLabel3"
+                class="absolute top-3 left-3 md:top-7 md:left-7 bg-[#F6FBF5E5] dark:bg-[#1A1C1AE5] text-xs px-3 py-1 rounded-full">
+                Husky
+              </span>
+              <div>
+                <div class="mx-4 mt-4 flex justify-between items-center">
+                  <span class="text-2xl text-[#181D1A] dark:text-white" id=""
+                    >Archie</span
+                  >
+                  <span class="text-[#8D4B00] dark:text-[#FFB77D]" id="reacts"
+                    >🙂 3.8k smiles</span
+                  >
+                </div>
+                <p
+                  class="hidden md:block mx-4 mt-1 text-[#554336] dark:text-[#D8C2B0]">
+                  Radiant park sprinter & swimming enthusiast
+                </p>
+                <div class="flex gap-2 mx-4 mt-3 mb-4 text-xs">
+                  <span
+                    class="bg-[#EBEFEA] dark:bg-[#2A2D2A] px-2.5 py-1 rounded-full">
+                    Gentle
+                  </span>
+                  <span
+                    class="bg-[#EBEFEA] dark:bg-[#2A2D2A] px-2.5 py-1 rounded-full">
+                    Devoted
+                  </span>
+                  <span
+                    class="bg-[#EBEFEA] dark:bg-[#2A2D2A] px-2.5 py-1 rounded-full">
+                    Joyous
+                  </span>
+                </div>
+                <div
+                  class="flex md:hidden justify-between items-center mx-4 mb-4 text-sm">
+                  <span class="text-[#554336] dark:text-[#D8C2B0]"
+                    >📍 Seattle, WA</span
+                  >
+                  <a
+                    class="bg-[#EBEFEA] dark:bg-[#2A2D2A] px-3 py-1.5 rounded-full text-xs"
+                    href="">
+                    View Profile ›
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div></div>
+      </div>
+    </div>
+
+    <script src="explore.js"></script>
+  </body>
+</html>

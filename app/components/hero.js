@@ -1,15 +1,40 @@
 import Image from "next/image";
-import { Clock } from "./icons/clock";
-import { DownArrow } from "./icons/downArrow";
-import { Fire } from "./icons/fire";
-import { MoonUnderLine } from "./icons/underLine";
-import { Paw } from "./icons/paw";
-import { Shuffle } from "./icons/shuffle";
-import { Smile } from "./icons/smile";
-import { Star } from "./icons/star";
-import { Thunder } from "./icons/thunder";
+import Link from "next/link";
+import {
+  Clock,
+  DownArrow,
+  Fire,
+  MoonUnderLine,
+  Paw,
+  Shuffle,
+  Smile,
+  Star,
+  Thunder,
+} from "./icons/icons";
+import { hrefWith } from "./url";
 
-export function Hero() {
+const heroNames = [
+  "Sunny Cooper",
+  "Luna Frost",
+  "Max Blizzard",
+  "Koda Snow",
+  "Bella Storm",
+];
+
+async function loadHeroImage() {
+  const res = await fetch("https://dog.ceo/api/breed/husky/images/random");
+  const result = await res.json();
+
+  return {
+    image: result.message,
+    name: heroNames[Math.floor(Math.random() * heroNames.length)],
+  };
+}
+
+export async function Hero({ params }) {
+  const hero = await loadHeroImage();
+  const next = Number(params.hero ?? 0) + 1;
+
   return (
     <section
       className="bg-zinc-950 font-sans text-base text-stone-200 relative isolate w-full px-4 lg:px-8 pt-6 pb-10 overflow-hidden"
@@ -39,13 +64,13 @@ export function Hero() {
           </p>
 
           <div className="flex flex-wrap items-center gap-4 pt-2">
-            <button
+            <Link
               className="inline-flex items-center gap-1 px-10 py-4 rounded-full bg-amber-500 text-amber-950 font-semibold text-sm transition-transform hover:scale-105 active:scale-95 shadow-md"
-              id="shuffleHeroBtn"
-              type="button">
+              href={hrefWith(params, { hero: next })}
+              scroll={false}>
               <Shuffle />
               <span>Show Another</span>
-            </button>
+            </Link>
 
             <a
               className="inline-flex items-center gap-1 px-10 py-4 rounded-full bg-zinc-900 text-stone-200 font-semibold text-sm hover:bg-zinc-800 transition-colors"
@@ -60,7 +85,7 @@ export function Hero() {
 
         <div className="lg:col-span-5 relative">
           <div className="relative bg-zinc-900 p-4 rounded-3xl shadow-xl overflow-hidden group">
-            <Dog />
+            <Dog image={hero.image} name={hero.name} />
 
             <div className="mt-4 pt-1 flex items-center justify-between text-stone-300 font-semibold text-xs px-1">
               <span className="flex items-center gap-1">
@@ -108,22 +133,24 @@ function EmItem({ title, kind, emoji, w }) {
   );
 }
 
-function Dog() {
+function Dog({ image, name }) {
   return (
     <div className="relative w-full h-105 rounded-3xl overflow-hidden bg-zinc-700">
-      <Image
-        alt="Golden Retriever"
-        fill
-        loading="eager"
-        sizes="(min-width: 1024px) 40vw, 100vw"
-        className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-        src="https://images.dog.ceo/breeds/retriever-golden/n02099601_100.jpg"
-      />
+      {image && (
+        <Image
+          alt="Husky"
+          fill
+          loading="eager"
+          sizes="(min-width: 1024px) 40vw, 100vw"
+          className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+          src={image}
+        />
+      )}
 
       <div className="absolute top-4 left-4 flex items-center gap-1 px-4 py-1 rounded-full bg-zinc-900/80 backdrop-blur-md text-stone-200 font-semibold text-xs">
         <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
 
-        <span>Golden Retriever</span>
+        <span>Husky</span>
       </div>
 
       <div className="absolute top-4 right-4 px-4 py-1 rounded-full bg-amber-500 text-amber-950 font-semibold text-xs shadow-sm">
@@ -134,7 +161,7 @@ function Dog() {
 
       <div className="absolute bottom-4 inset-x-4 flex items-end justify-between">
         <div>
-          <h3 className="font-bold text-2xl text-stone-200">Sunny Cooper</h3>
+          <h3 className="font-bold text-2xl text-stone-200">{name}</h3>
 
           <p className="font-normal text-sm leading-5 text-stone-300">
             Gentle companion • Loves afternoon park fetch

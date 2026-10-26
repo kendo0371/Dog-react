@@ -1,4 +1,4 @@
-import { UpArrow } from "./icons/upArrow";
+import { UpArrow } from "./icons/icons";
 
 export function Footer() {
   return (
